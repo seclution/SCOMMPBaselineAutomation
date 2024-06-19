@@ -1,0 +1,2 @@
+# SCOMMSMPBaselineAutomation
+SCOM Microsoft ManagementPack Baseline Automation
