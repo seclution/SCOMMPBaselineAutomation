@@ -70,6 +70,9 @@
 
 #>
 
+# Requires necessary modules
+#Requires -Modules OpsMgrExtended, OperationsManager
+
 # Bind the parameters for the script
 [CmdletBinding()]
 param(
@@ -82,11 +85,12 @@ param(
 Import-Module OpsMgrExtended
 Import-Module OperationsManager
 
+Set-StrictMode -Version Latest
 
 # Set Variables
 $scriptName = $MyInvocation.MyCommand.Name
 $toolName = [System.IO.Path]::GetFileNameWithoutExtension($scriptName)
-$ErrorActionPreference = 'Continue'
+$ErrorActionPreference = 'Stop'
 $devCompany = "Seclution GmbH & Co. KG"
 $comment = "Overriden by: $($env:USERNAME); `nOn: $(Get-Date) `nwith $($toolName) `nscripted by $($devCompany)"
 
@@ -192,7 +196,7 @@ try{
     }
 
     # If AddOnly Flag is not set, delete old overrides
-    if ($Scope -ne "AddeOnly")
+    if ($Scope -ne "AddOnly")
     {
         $overrides = Get-SCOMOverride | Where-Object { $_.GetManagementPack().Name -eq $overrideMPName }
         foreach ($override in $overrides) {
